@@ -1,0 +1,71 @@
+Name: Mike McCarron
+Date: 10/10/2011
+email: mmccarr1@mail.ccsf.edu
+
+
+
+#!/usr/bin/perl
+
+#Author: Mike McCarron
+#Modification Date: 10/10/2011
+#File Name: hash_names.pl
+#Program Description: display names in passwd file and number of occurences of names
+
+
+$file = $ARGV[0];
+print "$file";
+
+open(file) or die("Could not open log file.");
+foreach $line (<file>) {
+    chomp($line);
+    @data = split(':', $line);
+    for ($i =0; $i < 1; $i++){
+       @words = ();
+       @name = split(',', $data[4]);
+       for ($j=0; $j < 1; $j++){
+             %names = split(' ', $name[0]);
+             while (($key, $value) = each(%names)){
+                  push(@words, $key);
+                  foreach $word (@words){
+                      $count{$word} += 1;
+                  }
+             }
+        }
+    }
+}
+foreach $word (sort keys %count){
+    print "$word was seen $count{$word} times.\n"
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/pub/cs/pwood/cs113a/passwdbarry was seen 1 times.
+bart was seen 4 times.
+bill was seen 2 times.
+cal was seen 1 times.
+celia was seen 1 times.
+cindy was seen 2 times.
+olivo was seen 1 times.
+phuong was seen 1 times.
+sally was seen 3 times.
+sammy was seen 1 times.
+sparky was seen 1 times.
+tom was seen 1 times.
+~
+~
+~
+~
+~
+~
+~

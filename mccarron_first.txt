@@ -1,0 +1,16 @@
+/students/mmccarr1/perl> cat first.pl
+#!/usr/bin/perl
+
+#Author: Mike McCarron
+#Modification Date: 0/8/26/2011
+#File Name: first.pl
+#Program Description: display name and date
+
+print "Name: Mike McCarron \n";
+print "Date: 08/27/11 \n";
+
+
+
+/students/mmccarr1/perl> first.pl
+Name: Mike McCarron 
+Date: 08/27/11 

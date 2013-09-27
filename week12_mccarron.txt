@@ -1,0 +1,6 @@
+   Line1:     
+   Line2:         
+   Line3:      
+#!/usr/bin/perl #Author: Mike McCarron #Modification Date: 11/6/2011 #File Name: haiku_data.html #Program Description: 3 fields for a haiku submitted to haiku_data.cgi #URL: http://hills.ccsf.edu/~mmccarr1/haiku_data.html print "Content-type:text/html\n\n"; ### get & clean up the form data # using post method, read from STDIN read(STDIN, $buffer, $ENV{'CONTENT_LENGTH'}); # print "input_line is: $buffer
+\n"; # split into variable.name=value pairs at the "&" sign. @pairs = split(/&/, $buffer); @text = (); # make our %FORM hash from the name=value pairs foreach $pair (@pairs) { ($name, $value) = split(/=/, $pair); #print "varname=$name, value=$value
+\n"; $value =~ tr/+/ /; $value =~ s/%([a-fA-F0-9][a-fA-F0-9])/pack("C", hex($1))/eg; $value =~ s/~!/ ~!/g; $FORM{$name} = $value; push(@text, $value); } $str = "$text[0]:$text[1]:$text[2] \n"; #print "$str"; open FILE, ">>formdata.dat" or die $!; print FILE $str; close FILE; # now print something back to the HTML page # thanking person for filling out form print "Thank you! Your information has been submitted\n";

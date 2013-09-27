@@ -1,0 +1,75 @@
+Name: Michael McCarron
+Date: 10/25/11
+Email: mmccarr1@mail.ccsf.edu
+
+
+
+#!/usr/bin/perl -p0777
+
+# Author: Mike McCarron	
+# Modification Date: 10/25/11
+# File Name: html_strip.pl
+# Program Description: strip markup from file and format entities, make comments UC
+
+%entity = (
+
+    lt => '<',         #a less-than
+    gt => '>',         #a greater-than
+    amp => '&',        #an ampersand
+    quot => '"',       #a (vertical) double-quote
+    nbsp => chr 160,   #no-break space
+    iexcl => chr 161,  #inverted exclamation mark
+    cent => chr 162,   #cent sign
+    pound => chr 163,  #pound sterling
+    curren => chr 164, #general currency sign
+    '#65'     => 'A'       #ASCII 65 becomes captital 'A'
+
+);
+#replace comments so they aren't bashed by blanket removal of code
+s/<!--/ -[[/gs;
+s/-->/ ]]-/gs;
+
+
+#get rid of comments
+s/<!--.*?--\s*>//gs;
+
+#get rid of code markup
+s/<(?:[^>'"]*|(['"]).*?\1)*>//gms;
+
+#now put comments back in and capitalize
+s/-[[[a-z]/<!--/gms;
+s/]]-/-->/gms;
+/<!--.*?--\s*>/;
+$blurb = $&;
+$blurb =~ tr/[a-z]/[A-Z]/;
+s/<!--.*?-->/$blurb/gs;
+s/<!--\[/<!--/gs;
+
+#replace entities
+$lt = $entity{'lt'};
+$amp = $entity{'amp'};
+$a = $entity{'#65'};
+s/&lt;/$lt/;
+s/&amp;/$amp/;
+s/&#65;/$a/;
+
+
+
+
+
+
+
+This is the Title
+
+This is my page Header
+
+the link below says:
+Hello World!
+
+this is a comment  <!-- THIS IS A COMMENT  -->
+& hello 
+< bye
+A sparky
+
+
+

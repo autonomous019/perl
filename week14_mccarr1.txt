@@ -1,0 +1,61 @@
+#!/usr/bin/perl
+# Author: mike mccarron
+# Modification Date: 11/28/2011
+# File Name: haiku_epic.cgi
+# Program Description: creates an endless collaborative haiku
+# URL: http://hills.ccsf.edu/~mmccarr1/haiku_epic.cgi
+
+use CGI qw(:standard);
+print header, start_html("Haiku"), h1("Add Haiku");
+if (param()) { # the form has already been filled out
+     my $line1 = param("line1");
+     my $line2 = param("line2");
+     my $line3 = param("line3");
+
+     open X, "<haikuEpicData.dat" or die $!;
+     @arr = <X>;
+
+     close X;
+
+    for ($i = 0; $i < $#arr + 1; $i++){
+        @poem = split(/:/, $arr[$i]);
+        for ($j = 0; $j < $#poem + 1; $j++){
+           print "$poem[$j] <br />";
+        }
+        print hr();
+    }
+     $last_poem = "$line1 <br> $line2 <br> $line3<br>";
+     print "$last_poem \n";
+
+     $str = "$line1:$line2:$line3 \n";
+     open FILE, ">>haikuEpicData.dat" or die $!;
+     print FILE $str;
+     close FILE;
+
+
+
+
+} else { # first time through, so present clean form
+     print hr(); # draw a horizontal rule before the form
+     print start_form();
+     #print a textfile inside a paragraph tag
+     print p("First Line of Poem? ", textfield("line1"));
+     print p("Second Line of Poem? ", textfield("line2"));
+     print p("Third Line of Poem? ", textfield("line3"));
+     #the submit and reset buttons
+     print p(submit("create"), reset("clear"));
+     print end_form(), hr();
+}
+print end_html;
+
+
+
+
+brown:blue:green 
+aaa:aaaaaa aaaaaaaaa:afvvfsfewr fsdf 
+terter:retret:retr 
+uytu:tyuy:ytu 
+ooopp:ooop:oooo jdsklfj0 00eoe 
+brown :blue:green 
+jsldf jdlskjf:joeru lsdjf oeue:lsdjf lsdjf 
+turtles tottle:teap temperory:tempest tots 
